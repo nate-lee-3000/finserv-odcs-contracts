@@ -1,0 +1,728 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: 812eff93-ec65-4329-a900-ef4615d8ee5d
+name: finserv_dw
+version: 1.0.0
+status: active
+domain: financial-services
+description:
+  purpose: Comprehensive financial services data warehouse covering customer management, transaction processing, insurance
+    operations, risk assessment, and pre-built analytics.
+  limitations: Analytics views (CUSTOMER_360, POLICY_PERFORMANCE) are derived and may reflect stale data depending on upstream
+    refresh schedules.
+  usage: Primary data source for BI dashboards, regulatory reporting, risk analytics, and customer insights.
+tags:
+- finance
+- data-warehouse
+- finserv
+- regulated
+schema:
+- name: customer_360
+  logicalType: object
+  physicalType: view
+  physicalName: ANALYTICS.CUSTOMER_360
+  description: Pre-built analytical views combining data across domains.
+  tags:
+  - finance
+  - analytics
+  - derived
+  properties:
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: full_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: customer_tier
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: credit_score
+    logicalType: integer
+    physicalType: NUMBER(3,0)
+    classification: public
+  - name: annual_income
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: member_since
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: is_active
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: company_name
+    logicalType: string
+    physicalType: VARCHAR(100)
+    classification: public
+  - name: account_count
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_balance
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+  - name: transaction_count
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_spent
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+  - name: risk_score
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: credit_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+- name: policy_performance
+  logicalType: object
+  physicalType: view
+  physicalName: ANALYTICS.POLICY_PERFORMANCE
+  description: Pre-built analytical views combining data across domains.
+  tags:
+  - finance
+  - analytics
+  - derived
+  properties:
+  - name: policy_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: risk_level
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: total_policies
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_claims
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: claims_ratio
+    logicalType: number
+    physicalType: FLOAT
+    classification: public
+  - name: avg_monthly_premium
+    logicalType: number
+    physicalType: NUMBER(29,2)
+    classification: public
+  - name: avg_claim_amount
+    logicalType: number
+    physicalType: NUMBER(33,2)
+    classification: public
+  - name: total_claim_amount
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+- name: accounts
+  logicalType: object
+  physicalType: table
+  physicalName: CORE.ACCOUNTS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: account_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: account_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: account_type
+    logicalType: string
+    physicalType: VARCHAR(12)
+    classification: public
+  - name: opened_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(7)
+    classification: public
+  - name: current_balance
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: interest_rate
+    logicalType: number
+    physicalType: NUMBER(8,4)
+    classification: public
+  - name: overdraft_protection
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: last_transaction_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  dataGranularityDescription: Approximately 83,433 rows as of 2026-10-16
+- name: companies
+  logicalType: object
+  physicalType: table
+  physicalName: CORE.COMPANIES
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(4)
+    classification: internal
+    required: true
+    criticalDataElement: true
+  - name: company_name
+    logicalType: string
+    physicalType: VARCHAR(100)
+    classification: public
+    required: true
+  - name: company_type
+    logicalType: string
+    physicalType: VARCHAR(50)
+    classification: public
+  - name: hq_city
+    logicalType: string
+    physicalType: VARCHAR(50)
+    classification: public
+  - name: hq_state
+    logicalType: string
+    physicalType: VARCHAR(2)
+    classification: public
+  - name: founded_year
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: employee_count
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: aum_billions
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  dataGranularityDescription: Approximately 15 rows as of 2026-10-16
+- name: customers
+  logicalType: object
+  physicalType: table
+  physicalName: CORE.CUSTOMERS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+    criticalDataElement: true
+  - name: first_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: last_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: email
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: phone
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: date_of_birth
+    logicalType: date
+    physicalType: DATE
+    classification: restricted
+  - name: gender
+    logicalType: string
+    physicalType: VARCHAR(1)
+    classification: restricted
+  - name: address_line1
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: city
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: state_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: zip_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: customer_tier
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: credit_score
+    logicalType: integer
+    physicalType: NUMBER(3,0)
+    classification: public
+  - name: annual_income
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: employment_status
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: member_since
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: is_active
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: last_activity_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: advisor_notes
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 50,000 rows as of 2026-10-16
+- name: documents
+  logicalType: object
+  physicalType: table
+  physicalName: CORE.DOCUMENTS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: document_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(5,0)
+    classification: internal
+    criticalDataElement: true
+  - name: document_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_path
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_size_bytes
+    logicalType: integer
+    physicalType: NUMBER(8,0)
+    classification: public
+  - name: mime_type
+    logicalType: string
+    physicalType: VARCHAR(15)
+    classification: public
+  - name: page_count
+    logicalType: integer
+    physicalType: NUMBER(2,0)
+    classification: public
+  - name: uploaded_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: ocr_extracted_text
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 5,000 rows as of 2026-10-16
+- name: claims
+  logicalType: object
+  physicalType: table
+  physicalName: INSURANCE.CLAIMS
+  description: Insurance policy and claims management data.
+  tags:
+  - finance
+  - insurance
+  properties:
+  - name: claim_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: policy_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: internal
+    criticalDataElement: true
+  - name: claim_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: incident_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: reported_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: claim_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: claim_amount
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(12)
+    classification: public
+  - name: adjuster_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: adjuster_notes
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 9,847 rows as of 2026-10-16
+- name: policies
+  logicalType: object
+  physicalType: table
+  physicalName: INSURANCE.POLICIES
+  description: Insurance policy and claims management data.
+  tags:
+  - finance
+  - insurance
+  properties:
+  - name: policy_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: internal
+    criticalDataElement: true
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+    criticalDataElement: true
+  - name: policy_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: policy_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: effective_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: expiration_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: premium_monthly
+    logicalType: number
+    physicalType: NUMBER(10,2)
+    classification: public
+  - name: coverage_amount
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: deductible_amount
+    logicalType: number
+    physicalType: NUMBER(10,2)
+    classification: public
+  - name: risk_level
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(9)
+    classification: public
+  dataGranularityDescription: Approximately 35,000 rows as of 2026-10-16
+- name: fraud_alerts
+  logicalType: object
+  physicalType: table
+  physicalName: RISK.FRAUD_ALERTS
+  description: Risk assessments, fraud detection, and AML compliance data.
+  tags:
+  - finance
+  - risk
+  - compliance
+  properties:
+  - name: alert_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: account_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    criticalDataElement: true
+  - name: alert_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: alert_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: severity
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: flagged_amount
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(15)
+    classification: public
+  - name: resolution_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  dataGranularityDescription: Approximately 8,000 rows as of 2026-10-16
+- name: risk_assessments
+  logicalType: object
+  physicalType: table
+  physicalName: RISK.RISK_ASSESSMENTS
+  description: Risk assessments, fraud detection, and AML compliance data.
+  tags:
+  - finance
+  - risk
+  - compliance
+  properties:
+  - name: assessment_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: assessment_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: risk_score
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: credit_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: market_risk
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: operational_risk
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: aml_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: next_review_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: assessment_detail
+    logicalType: object
+    physicalType: VARIANT
+    classification: confidential
+  dataGranularityDescription: Approximately 50,000 rows as of 2026-10-16
+- name: transactions
+  logicalType: object
+  physicalType: table
+  physicalName: TRANSACTIONS.TRANSACTIONS
+  description: Financial transaction records across all account types.
+  tags:
+  - finance
+  - transactions
+  properties:
+  - name: transaction_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: account_id
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: internal
+    criticalDataElement: true
+  - name: transaction_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: post_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: transaction_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: category
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: amount
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: merchant_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: channel
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(9)
+    classification: public
+  - name: reference_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: transaction_metadata
+    logicalType: object
+    physicalType: VARIANT
+    classification: confidential
+  dataGranularityDescription: Approximately 200,000 rows as of 2026-10-16
+servers:
+- id: finserv-prod-analytics
+  server: snowflake-finserv-dw-analytics
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: ANALYTICS
+  warehouse: COMPUTE_WH
+- id: finserv-prod-core
+  server: snowflake-finserv-dw-core
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: CORE
+  warehouse: COMPUTE_WH
+- id: finserv-prod-insurance
+  server: snowflake-finserv-dw-insurance
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: INSURANCE
+  warehouse: COMPUTE_WH
+- id: finserv-prod-risk
+  server: snowflake-finserv-dw-risk
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: RISK
+  warehouse: COMPUTE_WH
+- id: finserv-prod-transactions
+  server: snowflake-finserv-dw-transactions
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: TRANSACTIONS
+  warehouse: COMPUTE_WH
+serviceLevel:
+  description: Placeholder - define your SLA targets here.
+team:
+- name: Data Engineering
+  description: Placeholder - assign team ownership here.
