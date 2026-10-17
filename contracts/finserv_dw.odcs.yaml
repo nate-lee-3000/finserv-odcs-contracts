@@ -20,7 +20,7 @@ schema:
 - name: customer_360
   logicalType: object
   physicalType: view
-  physicalName: ANALYTICS.CUSTOMER_360
+  physicalName: CUSTOMER_360
   description: Pre-built analytical views combining data across domains.
   tags:
   - finance
@@ -91,7 +91,7 @@ schema:
 - name: policy_performance
   logicalType: object
   physicalType: view
-  physicalName: ANALYTICS.POLICY_PERFORMANCE
+  physicalName: POLICY_PERFORMANCE
   description: Pre-built analytical views combining data across domains.
   tags:
   - finance
@@ -133,7 +133,7 @@ schema:
 - name: accounts
   logicalType: object
   physicalType: table
-  physicalName: CORE.ACCOUNTS
+  physicalName: ACCOUNTS
   description: Core reference and master data for customers, accounts, companies, and documents.
   tags:
   - finance
@@ -188,7 +188,7 @@ schema:
 - name: companies
   logicalType: object
   physicalType: table
-  physicalName: CORE.COMPANIES
+  physicalName: COMPANIES
   description: Core reference and master data for customers, accounts, companies, and documents.
   tags:
   - finance
@@ -234,7 +234,7 @@ schema:
 - name: customers
   logicalType: object
   physicalType: table
-  physicalName: CORE.CUSTOMERS
+  physicalName: CUSTOMERS
   description: Core reference and master data for customers, accounts, companies, and documents.
   tags:
   - finance
@@ -333,7 +333,7 @@ schema:
 - name: documents
   logicalType: object
   physicalType: table
-  physicalName: CORE.DOCUMENTS
+  physicalName: DOCUMENTS
   description: Core reference and master data for customers, accounts, companies, and documents.
   tags:
   - finance
@@ -388,7 +388,7 @@ schema:
 - name: claims
   logicalType: object
   physicalType: table
-  physicalName: INSURANCE.CLAIMS
+  physicalName: CLAIMS
   description: Insurance policy and claims management data.
   tags:
   - finance
@@ -447,7 +447,7 @@ schema:
 - name: policies
   logicalType: object
   physicalType: table
-  physicalName: INSURANCE.POLICIES
+  physicalName: POLICIES
   description: Insurance policy and claims management data.
   tags:
   - finance
@@ -508,7 +508,7 @@ schema:
 - name: fraud_alerts
   logicalType: object
   physicalType: table
-  physicalName: RISK.FRAUD_ALERTS
+  physicalName: FRAUD_ALERTS
   description: Risk assessments, fraud detection, and AML compliance data.
   tags:
   - finance
@@ -558,7 +558,7 @@ schema:
 - name: risk_assessments
   logicalType: object
   physicalType: table
-  physicalName: RISK.RISK_ASSESSMENTS
+  physicalName: RISK_ASSESSMENTS
   description: Risk assessments, fraud detection, and AML compliance data.
   tags:
   - finance
@@ -611,7 +611,7 @@ schema:
 - name: transactions
   logicalType: object
   physicalType: table
-  physicalName: TRANSACTIONS.TRANSACTIONS
+  physicalName: TRANSACTIONS
   description: Financial transaction records across all account types.
   tags:
   - finance

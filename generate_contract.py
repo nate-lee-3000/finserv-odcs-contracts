@@ -246,7 +246,7 @@ for (schema_name, table_name), tbl in sorted(tables.items()):
         "name": table_name.lower(),
         "logicalType": "object",
         "physicalType": physical_type,
-        "physicalName": f"{schema_name}.{table_name}",
+        "physicalName": table_name,
         "description": DOMAIN_DESCRIPTIONS.get(schema_name, ""),
         "tags": DOMAIN_TAGS.get(schema_name, ["finance"]),
         "properties": properties,
