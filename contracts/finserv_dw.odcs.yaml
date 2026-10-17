@@ -721,8 +721,13 @@ servers:
   database: FINSERV_DW
   schema: TRANSACTIONS
   warehouse: COMPUTE_WH
-serviceLevel:
-  description: Placeholder - define your SLA targets here.
+slaProperties:
+- id: latency_sla
+  property: latency
+  value: 1
+  unit: d
+  description: Placeholder - data should be no more than 1 day old.
 team:
-- name: Data Engineering
+- username: data-engineering
+  name: Data Engineering
   description: Placeholder - assign team ownership here.

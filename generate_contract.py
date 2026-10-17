@@ -287,11 +287,18 @@ contract = {
     "tags": ["finance", "data-warehouse", "finserv", "regulated"],
     "schema": schema_objects,
     "servers": servers,
-    "serviceLevel": {
-        "description": "Placeholder - define your SLA targets here.",
-    },
+    "slaProperties": [
+        {
+            "id": "latency_sla",
+            "property": "latency",
+            "value": "1",
+            "unit": "d",
+            "description": "Placeholder - data should be no more than 1 day old.",
+        }
+    ],
     "team": [
         {
+            "username": "data-engineering",
             "name": "Data Engineering",
             "description": "Placeholder - assign team ownership here.",
         }
