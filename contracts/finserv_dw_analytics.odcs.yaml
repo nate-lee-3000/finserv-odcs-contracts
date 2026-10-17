@@ -1,0 +1,149 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: 2081df53-d3c9-4529-9b9e-34c4ac0e6ddc
+name: finserv_dw_analytics
+version: 1.0.0
+status: active
+domain: analytics
+description:
+  purpose: Pre-built analytical views combining data across domains.
+  usage: Primary data source for BI dashboards, regulatory reporting, risk analytics, and customer insights.
+tags:
+- finance
+- analytics
+- derived
+schema:
+- name: customer_360
+  logicalType: object
+  physicalType: view
+  physicalName: CUSTOMER_360
+  description: Pre-built analytical views combining data across domains.
+  tags:
+  - finance
+  - analytics
+  - derived
+  properties:
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: full_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: customer_tier
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: credit_score
+    logicalType: integer
+    physicalType: NUMBER(3,0)
+    classification: public
+  - name: annual_income
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: member_since
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: is_active
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: company_name
+    logicalType: string
+    physicalType: VARCHAR(100)
+    classification: public
+  - name: account_count
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_balance
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+  - name: transaction_count
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_spent
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+  - name: risk_score
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: credit_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+- name: policy_performance
+  logicalType: object
+  physicalType: view
+  physicalName: POLICY_PERFORMANCE
+  description: Pre-built analytical views combining data across domains.
+  tags:
+  - finance
+  - analytics
+  - derived
+  properties:
+  - name: policy_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: risk_level
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: total_policies
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: total_claims
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: public
+  - name: claims_ratio
+    logicalType: number
+    physicalType: FLOAT
+    classification: public
+  - name: avg_monthly_premium
+    logicalType: number
+    physicalType: NUMBER(29,2)
+    classification: public
+  - name: avg_claim_amount
+    logicalType: number
+    physicalType: NUMBER(33,2)
+    classification: public
+  - name: total_claim_amount
+    logicalType: number
+    physicalType: NUMBER(26,2)
+    classification: public
+servers:
+- id: finserv-prod-analytics
+  server: snowflake-finserv-dw-analytics
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: ANALYTICS
+  warehouse: COMPUTE_WH
+slaProperties:
+- id: latency_sla
+  property: latency
+  value: 1
+  unit: d
+  description: Placeholder - data should be no more than 1 day old.
+team:
+- username: data-engineering
+  name: Data Engineering
+  description: Placeholder - assign team ownership here.

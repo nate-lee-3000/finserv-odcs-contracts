@@ -1,0 +1,139 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: 109d277b-6fc3-4606-877c-73fc7d1d7966
+name: finserv_dw_risk
+version: 1.0.0
+status: active
+domain: risk
+description:
+  purpose: Risk assessments, fraud detection, and AML compliance data.
+  usage: Primary data source for BI dashboards, regulatory reporting, risk analytics, and customer insights.
+tags:
+- finance
+- risk
+- compliance
+schema:
+- name: fraud_alerts
+  logicalType: object
+  physicalType: table
+  physicalName: FRAUD_ALERTS
+  description: Risk assessments, fraud detection, and AML compliance data.
+  tags:
+  - finance
+  - risk
+  - compliance
+  properties:
+  - name: alert_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: account_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    criticalDataElement: true
+  - name: alert_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: alert_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: severity
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: flagged_amount
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(15)
+    classification: public
+  - name: resolution_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  dataGranularityDescription: Approximately 8,000 rows as of 2026-10-16
+- name: risk_assessments
+  logicalType: object
+  physicalType: table
+  physicalName: RISK_ASSESSMENTS
+  description: Risk assessments, fraud detection, and AML compliance data.
+  tags:
+  - finance
+  - risk
+  - compliance
+  properties:
+  - name: assessment_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: assessment_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: risk_score
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: credit_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: market_risk
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: operational_risk
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: aml_risk
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: next_review_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: assessment_detail
+    logicalType: object
+    physicalType: VARIANT
+    classification: confidential
+  dataGranularityDescription: Approximately 50,000 rows as of 2026-10-16
+servers:
+- id: finserv-prod-risk
+  server: snowflake-finserv-dw-risk
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: RISK
+  warehouse: COMPUTE_WH
+slaProperties:
+- id: latency_sla
+  property: latency
+  value: 1
+  unit: d
+  description: Placeholder - data should be no more than 1 day old.
+team:
+- username: data-engineering
+  name: Data Engineering
+  description: Placeholder - assign team ownership here.

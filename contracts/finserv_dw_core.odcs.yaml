@@ -1,0 +1,291 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: ccf550c4-20c9-4967-bc0d-4e9f0842ae56
+name: finserv_dw_core
+version: 1.0.0
+status: active
+domain: core
+description:
+  purpose: Core reference and master data for customers, accounts, companies, and documents.
+  usage: Primary data source for BI dashboards, regulatory reporting, risk analytics, and customer insights.
+tags:
+- finance
+- core
+- master-data
+schema:
+- name: accounts
+  logicalType: object
+  physicalType: table
+  physicalName: ACCOUNTS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: account_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: account_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: account_type
+    logicalType: string
+    physicalType: VARCHAR(12)
+    classification: public
+  - name: opened_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(7)
+    classification: public
+  - name: current_balance
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: interest_rate
+    logicalType: number
+    physicalType: NUMBER(8,4)
+    classification: public
+  - name: overdraft_protection
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: last_transaction_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  dataGranularityDescription: Approximately 83,433 rows as of 2026-10-16
+- name: companies
+  logicalType: object
+  physicalType: table
+  physicalName: COMPANIES
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(4)
+    classification: internal
+    required: true
+    criticalDataElement: true
+  - name: company_name
+    logicalType: string
+    physicalType: VARCHAR(100)
+    classification: public
+    required: true
+  - name: company_type
+    logicalType: string
+    physicalType: VARCHAR(50)
+    classification: public
+  - name: hq_city
+    logicalType: string
+    physicalType: VARCHAR(50)
+    classification: public
+  - name: hq_state
+    logicalType: string
+    physicalType: VARCHAR(2)
+    classification: public
+  - name: founded_year
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: employee_count
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: public
+  - name: aum_billions
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  dataGranularityDescription: Approximately 15 rows as of 2026-10-16
+- name: customers
+  logicalType: object
+  physicalType: table
+  physicalName: CUSTOMERS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+    criticalDataElement: true
+  - name: first_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: last_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: email
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: phone
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: date_of_birth
+    logicalType: date
+    physicalType: DATE
+    classification: restricted
+  - name: gender
+    logicalType: string
+    physicalType: VARCHAR(1)
+    classification: restricted
+  - name: address_line1
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: city
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: state_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: zip_code
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: restricted
+  - name: customer_tier
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: credit_score
+    logicalType: integer
+    physicalType: NUMBER(3,0)
+    classification: public
+  - name: annual_income
+    logicalType: number
+    physicalType: NUMBER(12,2)
+    classification: public
+  - name: employment_status
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: member_since
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: is_active
+    logicalType: boolean
+    physicalType: BOOLEAN
+    classification: public
+  - name: last_activity_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: advisor_notes
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 50,000 rows as of 2026-10-16
+- name: documents
+  logicalType: object
+  physicalType: table
+  physicalName: DOCUMENTS
+  description: Core reference and master data for customers, accounts, companies, and documents.
+  tags:
+  - finance
+  - core
+  - master-data
+  properties:
+  - name: document_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(5,0)
+    classification: internal
+    criticalDataElement: true
+  - name: document_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_path
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: file_size_bytes
+    logicalType: integer
+    physicalType: NUMBER(8,0)
+    classification: public
+  - name: mime_type
+    logicalType: string
+    physicalType: VARCHAR(15)
+    classification: public
+  - name: page_count
+    logicalType: integer
+    physicalType: NUMBER(2,0)
+    classification: public
+  - name: uploaded_date
+    logicalType: timestamp
+    physicalType: TIMESTAMP_NTZ
+    classification: public
+  - name: ocr_extracted_text
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 5,000 rows as of 2026-10-16
+servers:
+- id: finserv-prod-core
+  server: snowflake-finserv-dw-core
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: CORE
+  warehouse: COMPUTE_WH
+slaProperties:
+- id: latency_sla
+  property: latency
+  value: 1
+  unit: d
+  description: Placeholder - data should be no more than 1 day old.
+team:
+- username: data-engineering
+  name: Data Engineering
+  description: Placeholder - assign team ownership here.

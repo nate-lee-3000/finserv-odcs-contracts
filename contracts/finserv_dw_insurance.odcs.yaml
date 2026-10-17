@@ -1,0 +1,155 @@
+apiVersion: v3.2.0
+kind: DataContract
+id: f4cf915a-b9b5-4fa1-9f40-e9db95d2c667
+name: finserv_dw_insurance
+version: 1.0.0
+status: active
+domain: insurance
+description:
+  purpose: Insurance policy and claims management data.
+  usage: Primary data source for BI dashboards, regulatory reporting, risk analytics, and customer insights.
+tags:
+- finance
+- insurance
+schema:
+- name: claims
+  logicalType: object
+  physicalType: table
+  physicalName: CLAIMS
+  description: Insurance policy and claims management data.
+  tags:
+  - finance
+  - insurance
+  properties:
+  - name: claim_id
+    logicalType: integer
+    physicalType: NUMBER(18,0)
+    classification: internal
+    primaryKey: true
+    primaryKeyPosition: 1
+    criticalDataElement: true
+  - name: policy_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: internal
+    criticalDataElement: true
+  - name: claim_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: incident_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: reported_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: claim_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: claim_amount
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(12)
+    classification: public
+  - name: adjuster_name
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: adjuster_notes
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: confidential
+  dataGranularityDescription: Approximately 9,847 rows as of 2026-10-16
+- name: policies
+  logicalType: object
+  physicalType: table
+  physicalName: POLICIES
+  description: Insurance policy and claims management data.
+  tags:
+  - finance
+  - insurance
+  properties:
+  - name: policy_id
+    logicalType: integer
+    physicalType: NUMBER(11,0)
+    classification: internal
+    criticalDataElement: true
+  - name: customer_id
+    logicalType: integer
+    physicalType: NUMBER(38,0)
+    classification: internal
+    criticalDataElement: true
+  - name: company_id
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+    criticalDataElement: true
+  - name: policy_type
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: public
+  - name: policy_number
+    logicalType: string
+    physicalType: VARCHAR(16777216)
+    classification: internal
+  - name: effective_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: expiration_date
+    logicalType: date
+    physicalType: DATE
+    classification: public
+  - name: premium_monthly
+    logicalType: number
+    physicalType: NUMBER(10,2)
+    classification: public
+  - name: coverage_amount
+    logicalType: number
+    physicalType: NUMBER(14,2)
+    classification: public
+  - name: deductible_amount
+    logicalType: number
+    physicalType: NUMBER(10,2)
+    classification: public
+  - name: risk_level
+    logicalType: string
+    physicalType: VARCHAR(8)
+    classification: public
+  - name: status
+    logicalType: string
+    physicalType: VARCHAR(9)
+    classification: public
+  dataGranularityDescription: Approximately 35,000 rows as of 2026-10-16
+servers:
+- id: finserv-prod-insurance
+  server: snowflake-finserv-dw-insurance
+  type: snowflake
+  environment: prod
+  account: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD
+  host: SFSEHOL-DATA_IN_THE_D_HACKATHON_OCTOBER_GVKWCD.snowflakecomputing.com
+  port: 443
+  database: FINSERV_DW
+  schema: INSURANCE
+  warehouse: COMPUTE_WH
+slaProperties:
+- id: latency_sla
+  property: latency
+  value: 1
+  unit: d
+  description: Placeholder - data should be no more than 1 day old.
+team:
+- username: data-engineering
+  name: Data Engineering
+  description: Placeholder - assign team ownership here.
